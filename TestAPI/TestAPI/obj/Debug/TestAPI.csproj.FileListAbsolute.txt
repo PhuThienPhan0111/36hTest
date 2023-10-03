@@ -55,7 +55,9 @@ F:\React\TestAPI\TestAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.
 F:\React\TestAPI\TestAPI\bin\Microsoft.Web.Infrastructure.dll
 F:\React\TestAPI\TestAPI\bin\Newtonsoft.Json.dll
 F:\React\TestAPI\TestAPI\bin\System.Net.Http.Formatting.dll
+F:\React\TestAPI\TestAPI\bin\System.Web.Cors.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.Helpers.dll
+F:\React\TestAPI\TestAPI\bin\System.Web.Http.Cors.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.Http.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.Http.WebHost.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.Mvc.dll
@@ -65,6 +67,7 @@ F:\React\TestAPI\TestAPI\bin\System.Web.WebPages.Deployment.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.WebPages.dll
 F:\React\TestAPI\TestAPI\bin\System.Web.WebPages.Razor.dll
 F:\React\TestAPI\TestAPI\bin\WebGrease.dll
+F:\React\TestAPI\TestAPI\bin\System.Web.Http.Cors.xml
 F:\React\TestAPI\TestAPI\bin\Newtonsoft.Json.xml
 F:\React\TestAPI\TestAPI\bin\System.Net.Http.Formatting.xml
 F:\React\TestAPI\TestAPI\bin\System.Web.Helpers.xml

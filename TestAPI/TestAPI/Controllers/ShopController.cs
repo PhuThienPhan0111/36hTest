@@ -28,7 +28,31 @@ namespace TestAPI.Controllers
                 cmd.CommandType = CommandType.Text;
                 da.Fill(_database);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, _database);
+            List<Shop> shop = new List<Shop>();
+            try
+            {
+                foreach (var _db in _database.Select())
+                {
+                    shop.Add(new Shop()
+                    {
+                        shop_code = (int)_db.ItemArray[0],
+                        name = _db.ItemArray[1].ToString(),
+                        location = _db.ItemArray[2].ToString(),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            var items = (from cus in shop
+                         select new
+                         {
+                             shopCode = cus.shop_code,
+                             name = cus.name,
+                             location = cus.location,
+                         }).OrderByDescending(item => item.location).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, items);
         }
 
         public string Post(Shop shop)

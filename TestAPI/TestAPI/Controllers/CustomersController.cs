@@ -28,7 +28,33 @@ namespace TestAPI.Controllers
                 cmd.CommandType = CommandType.Text;
                 da.Fill(_database);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, _database);
+            List<Customers> customers = new List<Customers>();
+            try
+            {
+                foreach (var _db in _database.Select())
+                {
+                    customers.Add(new Customers()
+                    {
+                        customer_code = (int)_db.ItemArray[0],
+                        first_name = _db.ItemArray[1].ToString(),
+                        last_name = _db.ItemArray[2].ToString(),
+                        birth_date = (DateTime)_db.ItemArray[3],
+                        email = _db.ItemArray[4].ToString(),
+                    });
+                }
+            }catch(Exception ex)
+            {
+
+            }
+            var items = (from cus in customers
+                         select new
+                         {
+                             customerCode = cus.customer_code,
+                             name = String.Format("{0} {1}", cus.last_name, cus.first_name),
+                             birthDate = cus.birth_date.ToString("dd/MM/yyyy"),
+                             email = cus.email,
+                         }).OrderBy(item => item.email).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, items);
         }
         public string Post(Customers customers)
         {

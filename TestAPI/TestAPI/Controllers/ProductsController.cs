@@ -28,7 +28,33 @@ namespace TestAPI.Controllers
                 cmd.CommandType = CommandType.Text;
                 da.Fill(_database);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, _database);
+
+            List<Products> products = new List<Products>();
+            try
+            {
+                foreach (var _db in _database.Select())
+                {
+                    products.Add(new Products()
+                    {
+                        product_code = (int)_db.ItemArray[0],
+                        name = _db.ItemArray[1].ToString(),
+                        price = (decimal)_db.ItemArray[2],
+                        shop_code = (int)_db.ItemArray[3],
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            var items = (from cus in products
+                         select new
+                         {
+                             productCode = cus.product_code,
+                             name = cus.name,
+                             price = cus.price,
+                         }).OrderByDescending(item => item.price).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, items);
         }
 
         public string Post(Products products)
