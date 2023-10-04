@@ -51,6 +51,8 @@ namespace TestAPI.Controllers
                          {
                              customerCode = cus.customer_code,
                              name = String.Format("{0} {1}", cus.last_name, cus.first_name),
+                             last_name= cus.last_name,
+                             first_name = cus.first_name,
                              birthDate = cus.birth_date.ToString("dd/MM/yyyy"),
                              email = cus.email,
                          }).OrderBy(item => item.email).ToList();
@@ -114,7 +116,9 @@ namespace TestAPI.Controllers
             {
                 DataTable _database = new DataTable();
                 string query = @"DELETE FROM [dbo].[Customer]
-                where customer_code = " + id + @"";
+                where customer_code = " + id + @";";
+                query += @"DELETE FROM [dbo].[Order]
+                where customer_code = " + id + @";";
                 using (var con = new SqlConnection(configDB))
                 using (var cmd = new SqlCommand(query, con))
                 using (var da = new SqlDataAdapter(cmd))

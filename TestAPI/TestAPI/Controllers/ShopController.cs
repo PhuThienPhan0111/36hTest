@@ -45,12 +45,12 @@ namespace TestAPI.Controllers
             {
 
             }
-            var items = (from cus in shop
+            var items = (from shp in shop
                          select new
                          {
-                             shopCode = cus.shop_code,
-                             name = cus.name,
-                             location = cus.location,
+                             shopCode = shp.shop_code,
+                             name = shp.name,
+                             location = shp.location,
                          }).OrderByDescending(item => item.location).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, items);
         }
@@ -72,6 +72,54 @@ namespace TestAPI.Controllers
                     da.Fill(_database);
                 }
                 return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Not OK";
+            }
+        }
+
+        public string Put(Shop shop)
+        {
+            try
+            {
+                DataTable _database = new DataTable();
+                string query = @"UPDATE [dbo].[Customer] SET 
+                [name] = N'" + shop.name + @"' 
+                ,[location] = N'" + shop.location + @"' 
+                where customer_code = " + shop.shop_code + @"";
+                using (var con = new SqlConnection(configDB))
+                using (var cmd = new SqlCommand(query, con))
+                using (var da = new SqlDataAdapter(cmd))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    da.Fill(_database);
+                }
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Not OK";
+            }
+        }
+
+        public string Delete(int id)
+        {
+            try
+            {
+                DataTable _database = new DataTable();
+                string query = @"DELETE FROM [dbo].[Shop]
+                where shop_code = " + id + @"";
+                query += @"DELETE FROM [dbo].[Order]
+                where shop_code = " + id + @";";
+                using (var con = new SqlConnection(configDB))
+                using (var cmd = new SqlCommand(query, con))
+                using (var da = new SqlDataAdapter(cmd))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    da.Fill(_database);
+                }
+                return "Deleted";
             }
             catch (Exception ex)
             {
